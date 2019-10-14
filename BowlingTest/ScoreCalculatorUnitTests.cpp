@@ -14,7 +14,7 @@ TEST(ScoreCalculator, NoBalls) {
 	EXPECT_EQ(expected, score);
 }
 
-TEST(ScoreCalculator, ScoreOnBallZero) {
+TEST(ScoreCalculator, ScoreOneBallZero) {
 
 	vector<int> frames{ 0 };
 
@@ -27,6 +27,7 @@ TEST(ScoreCalculator, ScoreOnBallZero) {
 
 
 //Uncomment this test ONLY if all previous test have passed
+//DO NOT change the test!
 //TEST(ScoreCalculator, ScoreOneBall_5) { 
 //
 //	vector<int> frames{ 5 };
@@ -41,6 +42,7 @@ TEST(ScoreCalculator, ScoreOnBallZero) {
 
 
 //Uncomment this test ONLY if all previous test have passed
+//DO NOT change the test!
 //TEST(ScoreCalculator, Score_6_2) {
 //
 //	vector<int> frames{ 6, 2};
@@ -55,6 +57,7 @@ TEST(ScoreCalculator, ScoreOnBallZero) {
 
 
 //Uncomment this test ONLY if all previous test have passed
+//DO NOT change the test!
 //TEST(ScoreCalculator, Score_6_2_5) {
 //
 //	vector<int> frames{ 6, 2, 5 };
@@ -70,6 +73,7 @@ TEST(ScoreCalculator, ScoreOnBallZero) {
 
 
 //Uncomment this test ONLY if all previous test have passed
+//DO NOT change the test!
 //TEST(ScoreCalculator, Score_6_2_5_4_3) {
 //
 //	vector<int> frames{ 6, 2, 5, 4, 3 };
@@ -84,6 +88,7 @@ TEST(ScoreCalculator, ScoreOnBallZero) {
 
 
 //Uncomment this test ONLY if all previous test have passed
+//DO NOT change the test!
 //TEST(ScoreCalculator, Score_6_4_5_Spare) {
 //
 //	vector<int> frames{ 6, 4, 5};
@@ -100,6 +105,7 @@ TEST(ScoreCalculator, ScoreOnBallZero) {
 
 
 //Uncomment this test ONLY if all previous test have passed
+//DO NOT change the test!
 //TEST(ScoreCalculator, Score_10_5_4_Strike) {
 //
 //	vector<int> frames{ 10, 5, 4 };
@@ -115,6 +121,7 @@ TEST(ScoreCalculator, ScoreOnBallZero) {
 
 
 //Uncomment this test ONLY if all previous test have passed
+//DO NOT change the test!
 //TEST(ScoreCalculator, Score_10_10_2Strikes) {
 //
 //	vector<int> frames{ 10, 10 };
@@ -127,8 +134,7 @@ TEST(ScoreCalculator, ScoreOnBallZero) {
 //}
 
 //Uncomment this test ONLY if all previous test have passed
-//
-//Uncomment this test ONLY if all previous test have passed
+//DO NOT change the test!
 //TEST(ScoreCalculator, Score_10_10_10_4Strikes) {
 //
 //	vector<int> frames{ 10, 10, 10, 10};
@@ -143,6 +149,7 @@ TEST(ScoreCalculator, ScoreOnBallZero) {
 
 
 //Uncomment this test ONLY if all previous test have passed
+//DO NOT change the test!
 //TEST(ScoreCalculator, Score_FullGame) {
 //
 //	vector<int> frames{ 10, 7, 3, 9, 0, 10, 0, 8, 8,2, 0, 6, 10, 10, 10, 8, 1 };
@@ -157,6 +164,7 @@ TEST(ScoreCalculator, ScoreOnBallZero) {
 
 
 //Uncomment this test ONLY if all previous test have passed
+//DO NOT change the test!
 //TEST(ScoreCalculator, Score_PerfectGame) {
 //
 //	vector<int> frames{ 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10 };
@@ -171,6 +179,7 @@ TEST(ScoreCalculator, ScoreOnBallZero) {
 
 
 //Uncomment this test ONLY if all previous test have passed
+//DO NOT change the test!
 //TEST(ScoreCalculator, Score_tooManyFrames) {
 //
 //	vector<int> frames{ 10, 7, 3, 9, 0, 10, 0, 8, 8,2, 0, 6, 10, 10, 10, 8, 1, 10, 10};

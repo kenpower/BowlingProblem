@@ -3,7 +3,7 @@
 using namespace std;
 
 
-TEST(ScoreCalculator, ScoreOnBallZero) {
+TEST(ScoreCalculator, ScoreOneBallZero) {
 
 	vector<int> frames{ 0 };
 

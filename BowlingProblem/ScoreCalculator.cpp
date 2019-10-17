@@ -1,75 +1,74 @@
 #include "ScoreCalculator.h"
 
-int getFrameScore(vector<int>::iterator& , vector<int>::iterator );
-int popNextBall(vector<int>::iterator&, vector<int>::iterator);
-int scoreFromNextTwoBalls(vector<int>::iterator, vector<int>::iterator);
-int scoreFromNextBall(vector<int>::iterator, vector<int>::iterator);
-int scoreFromNthLastBall(vector<int>::iterator, vector<int>::iterator, int);
+int getFrameScore(deque<int>& frames);
+int takeNextBall(deque<int>&);
+int scoreFromNextTwoBalls(deque<int> const&);
+int scoreFromNextBall(deque<int> const&);
+int scoreFromNthNextBall(deque<int> const&, int);
 
-vector<int> ScoreCalculator::score(vector<int> frames)
+vector<int> ScoreCalculator::score(vector<int> const& ballScores)
 {
-	vector<int>::iterator nextBallItr{ frames.begin() };
-
-	vector<int>::iterator endItr{ frames.end() };
+	deque<int> balls(ballScores.begin(), ballScores.end());
 
 	vector<int> scores{};
-	int cumulativeScore{ 0 };
-	const int MAX_NUMBER_OF_FRAMES{ 10 };
+	int currentscore{ 0 };
+	int frameCount{ 0 };
 
-	while (nextBallItr != endItr && scores.size < MAX_NUMBER_OF_FRAMES) {
+	while (!balls.empty() && frameCount <10) {
 
-		cumulativeScore += getFrameScore(nextBallItr, endItr);
+		frameCount++;
 
-		scores.push_back(cumulativeScore);
+		currentscore += getFrameScore(balls);
+
+		scores.push_back(currentscore);
 	}
 
 	return  scores;
 }
 
-int getFrameScore(vector<int>::iterator& nextBallItr, vector<int>::iterator endItr)
+int getFrameScore(deque<int>& balls)
 {
 	const int STRIKE{ 10 };
 	const int SPARE{ 10 };
 
-	int firstBall{ popNextBall(nextBallItr, endItr) };
+	int firstBall{ takeNextBall(balls) };
 
 	if (STRIKE == firstBall) {
-		return firstBall + scoreFromNextTwoBalls(nextBallItr, endItr);
+		return firstBall + scoreFromNextTwoBalls(balls);
 	}
 	
-	int secondBall{ popNextBall(nextBallItr, endItr) };
+	int secondBall{ takeNextBall(balls) };
 
 	if (SPARE == (firstBall + secondBall)) {
-		return firstBall + secondBall + scoreFromNextBall(nextBallItr, endItr);
+		return firstBall + secondBall + scoreFromNextBall(balls);
 	}
 
 	return firstBall + secondBall;
 }
 
-int popNextBall(vector<int>::iterator& nextBallItr, vector<int>::iterator endItr)
+int takeNextBall(deque<int>& balls)
 {
 	int nextBall{ 0 };
-
-	if (nextBallItr != endItr) {
-		nextBall = *nextBallItr++;
+	if (!balls.empty()) {
+		nextBall = balls.front();
+		balls.pop_front();
 	}
 	return nextBall;
 }
 
-int scoreFromNextTwoBalls(vector<int>::iterator nextBallterator, vector<int>::iterator endScoresIterator)
+int scoreFromNextTwoBalls(deque<int> const& balls)
 {
-	return 	scoreFromNthLastBall(nextBallterator, endScoresIterator, 1) + scoreFromNthLastBall(nextBallterator, endScoresIterator, 0);
+	return scoreFromNthNextBall(balls, 0) + scoreFromNthNextBall(balls, 1);
 }
 
-int scoreFromNextBall(vector<int>::iterator nextBallterator, vector<int>::iterator endScoresIterator) {
-	return scoreFromNthLastBall(nextBallterator, endScoresIterator, 0);
+int scoreFromNextBall(deque<int> const& balls) {
+	return scoreFromNthNextBall(balls, 0);
 }
 
-int scoreFromNthLastBall(vector<int>::iterator nextBallterator, vector<int>::iterator endScoresIterator, int n) {
-	if (distance(nextBallterator, endScoresIterator) > n) {
-		return *(nextBallterator+n);
+int scoreFromNthNextBall(deque<int> const& balls, int n) {
+	if (balls.size() > n) {
+		return balls[n];
 	}
-
 	return 0;
 }
 

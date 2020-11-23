@@ -1,73 +1,82 @@
 #include "ScoreCalculator.h"
 
-int getFrameScore(deque<int>& frames);
+int getNextFrameScore(deque<int>& frames);
 int takeNextBall(deque<int>&);
 int scoreFromNextTwoBalls(deque<int> const&);
 int scoreFromNextBall(deque<int> const&);
 int scoreFromNthNextBall(deque<int> const&, int);
+bool isAStrike(int);
+bool isASpare(int);
 
 vector<int> ScoreCalculator::score(vector<int> const& ballScores)
 {
-	deque<int> balls(ballScores.begin(), ballScores.end());
+	deque<int> scoreForEachBall(ballScores.begin(), ballScores.end());
 
 	vector<int> scores{};
-	int currentscore{ 0 };
+	int cumulativeScore{ 0 };
 	int frameCount{ 0 };
 
-	while (!balls.empty() && frameCount <10) {
+	while (!scoreForEachBall.empty() && frameCount <10) {
 
 		frameCount++;
 
-		currentscore += getFrameScore(balls);
+		cumulativeScore += getNextFrameScore(scoreForEachBall);
 
-		scores.push_back(currentscore);
+		scores.push_back(cumulativeScore);
 	}
 
-	return  scores;
+	return scores;
 }
 
-int getFrameScore(deque<int>& balls)
+int getNextFrameScore(deque<int>& scoreForEachBall)
 {
-	const int STRIKE{ 10 };
-	const int SPARE{ 10 };
+	int firstBall{ takeNextBall(scoreForEachBall) };
 
-	int firstBall{ takeNextBall(balls) };
-
-	if (STRIKE == firstBall) {
-		return firstBall + scoreFromNextTwoBalls(balls);
+	if (isAStrike(firstBall)) {
+		return firstBall + scoreFromNextTwoBalls(scoreForEachBall);
 	}
 	
-	int secondBall{ takeNextBall(balls) };
+	int twoBallScore = firstBall + takeNextBall(scoreForEachBall);
 
-	if (SPARE == (firstBall + secondBall)) {
-		return firstBall + secondBall + scoreFromNextBall(balls);
+	if (isASpare(twoBallScore)) {
+		return twoBallScore + scoreFromNextBall(scoreForEachBall);
 	}
 
-	return firstBall + secondBall;
+	return twoBallScore;
 }
 
-int takeNextBall(deque<int>& balls)
+bool isAStrike(int ballScore) {
+	int scoreForAStrike{ 10 };
+	return scoreForAStrike == ballScore;
+}
+
+bool isASpare(int ballScore) {
+	int scoreForASpare{ 10 };
+	return scoreForASpare == ballScore;
+}
+
+int takeNextBall(deque<int>& scoreForEachBall)
 {
 	int nextBall{ 0 };
-	if (!balls.empty()) {
-		nextBall = balls.front();
-		balls.pop_front();
+	if (!scoreForEachBall.empty()) {
+		nextBall = scoreForEachBall.front();
+		scoreForEachBall.pop_front();
 	}
 	return nextBall;
 }
 
-int scoreFromNextTwoBalls(deque<int> const& balls)
+int scoreFromNextTwoBalls(deque<int> const& scoreForEachBall)
 {
-	return scoreFromNthNextBall(balls, 0) + scoreFromNthNextBall(balls, 1);
+	return scoreFromNthNextBall(scoreForEachBall, 0) + scoreFromNthNextBall(scoreForEachBall, 1);
 }
 
-int scoreFromNextBall(deque<int> const& balls) {
-	return scoreFromNthNextBall(balls, 0);
+int scoreFromNextBall(deque<int> const& scoreForEachBall) {
+	return scoreFromNthNextBall(scoreForEachBall, 0);
 }
 
-int scoreFromNthNextBall(deque<int> const& balls, int n) {
-	if (balls.size() > n) {
-		return balls[n];
+int scoreFromNthNextBall(deque<int> const& scoreForEachBall, int n) {
+	if (scoreForEachBall.size() > n) {
+		return scoreForEachBall[n];
 	}
 	return 0;
 }
